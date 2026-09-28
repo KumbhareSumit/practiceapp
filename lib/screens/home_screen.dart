@@ -10,6 +10,7 @@ import '../topics/07_network_calls.dart';
 import '../topics/08_theme_toggle.dart';
 import '../topics/09_navigation_hubs.dart';
 import '../topics/10_local_storage.dart';
+import '../topics/11_cubit_state.dart';
 
 class HomeScreen extends StatelessWidget {
   final bool isDarkMode;
@@ -208,8 +209,23 @@ class HomeScreen extends StatelessWidget {
                   ),
                 );
               }
-            )
-          )
+            ),
+          ),
+
+          Card(
+            child: ListTile(
+             leading: const Icon(Icons.psychology),
+             title: const Text('Topic 11: Cubit Architecture'),
+             subtitle: const Text('Decoupling business logic with unified sealed class state loops'),
+             trailing: const Icon(Icons.arrow_forward_ios),
+             onTap: () {
+             Navigator.push(
+             context,
+             MaterialPageRoute(builder: (context) => const CubitStateScreen()),
+             );
+             },
+            ),
+          ),
         ],
       ),
     );
