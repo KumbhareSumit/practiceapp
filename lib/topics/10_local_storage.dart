@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class LocalStorageScreen extends Stateful   {
+class LocalStorageScreen extends StatefulWidget   {
     const LocalStorageScreen({super.key});
 
     @override
@@ -10,11 +10,11 @@ class LocalStorageScreen extends Stateful   {
 
     class _LocalStorageScreenState extends State<LocalStorageScreen>{
 
-        final TextEditingController _noteController = TextEditingController();
+        // final TextEditingController _noteController = TextEditingController();
 
         //Controller to extract text from  our note input box
         final TextEditingController _noteController = TextEditingController();
-        Strin _savedNoteText = 'No Notes saved yet.';
+        String _savedNoteText = 'No Notes saved yet.';
 
         @override 
         void initState(){
@@ -31,10 +31,10 @@ class LocalStorageScreen extends Stateful   {
         Future<void> _loadSavedData() async{
             final prefs = await SharedPreferences.getInstance();
             // use the setState to update the visual display on screen
-            setstate ((){
+            setState ((){
 
                 //user_memo is our uniqe key name. if it doesn't exist , fallback to default text.
-                _savedNoteText = pref.getString('user_memo') ?? 'No notes saved yet.';
+                _savedNoteText = prefs.getString('user_memo') ?? 'No notes saved yet.';
             
             });
         }
@@ -46,15 +46,16 @@ class LocalStorageScreen extends Stateful   {
             _noteController.clear(); // clear the text input field area
             _loadSavedData();// refresh the visible screen state content
 
-            ScaffoldMessenger.of(content).showSnackBar(
-                const snackBar(
+            //if (!mounted) return;
+            ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
                     content: Text('Data successfully written to persistent disk!'),
                     backgroundColor:Colors.green,
                 ),
             );
         }
-        @ovwerride
-        Widget build(Context context){
+        @override
+        Widget build(BuildContext context){
             return Scaffold(
                 appBar:AppBar(
                     title: const Text('Locsl stronge lab'),
@@ -69,7 +70,7 @@ class LocalStorageScreen extends Stateful   {
                                 'Persistent Notepad Manual',
                                 style: TextStyle(fontSize:20,fontWeight:FontWeight.bold),
                             ),
-                            const SizedBox(height:20)
+                            const SizedBox(height:20),
                             TextField(
                                 controller: _noteController,
                                 decoration: const InputDecoration(
@@ -93,19 +94,19 @@ class LocalStorageScreen extends Stateful   {
                             Container(
                                 padding: const EdgeInsets.all(16.0),
                                 decoration: BoxDecoration(
-                                 color: Colors.brown.withopacity(0.1),
+                                 color: Colors.brown.withValues(alpha:0.1),
                                  borderRadius:BorderRadius.circular(8),
                                  border: Border.all(color:Colors.brown),
                                 ),
-                                child:Text(
+                                child: Text(
                                     _savedNoteText,
-                                    style: TextStyle(fontSize:16,fontStyle:FontStyle.italic),,
+                                    style: TextStyle(fontSize:16,fontStyle:FontStyle.italic),
                                 ),
                             ),
                         ],
                     ),
-                );
-            )
+                ),
+            );
         }
 
     }

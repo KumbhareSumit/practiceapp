@@ -195,7 +195,7 @@ class HomeScreen extends StatelessWidget {
           ),
 
           Card(
-            chils:ListTile(
+            child:ListTile(
               leading: const Icon(Icons.save),
               title: const Text('Topic 10: Local Disk Storage'),
               subtitle: const Text('Persisting user settings data strings using shared_preferences'),
