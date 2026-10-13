@@ -230,7 +230,7 @@ class HomeScreen extends StatelessWidget {
 
           Card(
             child: ListTile(
-             leading: const Icon(Icons.setting_input_component),
+             leading: const Icon(Icons.settings_input_component),
              title: const Text('Topic 12: Event-Drive Bloc'),
              subtitle: const Text('Mapping explict user event to sate streams cleanly'),
              trailing: const Icon(Icons.arrow_forward_ios),

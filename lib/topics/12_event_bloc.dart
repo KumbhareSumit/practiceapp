@@ -66,17 +66,18 @@ class AutomationBloc extends Bloc<EngineEvent, Enginestate> {
   }
 
   //all event handlers receive two parameters: the Event instance and the emitter emitter
-  void _onRunDataCycle(RunDataCycleEvent event, Emitter<Enginestate>emit)assync {
+  void _onRunDataCycle(RunDataCycleEvent event, Emitter<Enginestate>emit)async {
     emit(EngineProcessing());
 
     // simulatedeep backgaround data calculation or complex JSON matrix maps parsing
     await Future.delayed(const Duration(milliseconds: 700));
 
-    if(event.batchSize <= 0){
+    if (event.batchSize <= 0){
         emit(EngineFailure('Invalid Operation: Batch data scop sizes must positive!'));
     }
     else{
-        _internallogs.add('Executed compute cycle array containing ${event.batchSize} element at ${DataTime.now().toLocal()}');
+        _internallogs.add('Executed compute cycle array containing ${event.batchSize} element at ${DateTime.now().toLocal()}');
+        emit(EngineSuccess(List.from(_internallogs)));
     }
   }
 
@@ -116,9 +117,9 @@ class EventBlocScreen extends StatelessWidget {
                                 child: Container(
                                     padding:const EdgeInsets.all(16.0),
                                     decoration:BoxDecoration(
-                                        color:Colors.purple.withValues(),
-                                        borderRadius:BorderRadius.circular(12.0),
-                                        border: Border.all(color: Colors.purple.withValues()),
+                                        color: Colors.purple.withValues(alpha: 0.08),
+                                        borderRadius: BorderRadius.circular(12.0),
+                                        border: Border.all(color: Colors.purple.withValues(alpha: 0.2)),
                                     ),
                                     child: Center(
                                         child: BlocBuilder<AutomationBloc,Enginestate>(
@@ -147,25 +148,25 @@ class EventBlocScreen extends StatelessWidget {
                         const SizedBox(height: 24),
 
                         //--Contorl Interface---
-                        row(
+                        Row(
                           children:[
                             Expanded(
                               child: ElevatedButton.icon(
-                                style: ElevatedButton.styleFrom(backgaroundColor:Colors.grey[300]),
+                                style: ElevatedButton.styleFrom(backgroundColor:Colors.grey[300]),
                                 // Instead of calling a function , we drop an event object into the stream
-                                onpressed:() => context.read<AutomationBloc>().add(PurgeLogsEvent()),
+                                onPressed:() => context.read<AutomationBloc>().add(PurgeLogsEvent()),
                                 icon:const Icon(Icons.delete_sweep, color:Colors.black87),
-                                lable: const Text('Clear System', style:TextStyle(color:Colors.black87)),
+                                label: const Text('Clear System', style:TextStyle(color:Colors.black87)),
                               ),
                             ),
-                            const SizedBox(width:12,
+                            const SizedBox(width:12),
                             Expanded(
                               child: ElevatedButton.icon(
-                                style: ElevatedButton.styleFrom(backgaroundColor:Colors.purple),
+                                style: ElevatedButton.styleFrom(backgroundColor:Colors.purple),
                                 // triggering a calculation loop while explicitly package target dynamic parameter
-                                onPressed: () => context.read<AutomationBloc>().add(RunDataCycleEvent(batchSize:)),
+                                onPressed: () => context.read<AutomationBloc>().add(RunDataCycleEvent(batchSize:250)),
                                 icon: const Icon(Icons.bolt, color:Colors.white),
-                                lable: const Text(
+                                label: const Text(
                                   'fire Event', style:TextStyle(color:Colors.white),
                               ),
                             )),
