@@ -11,6 +11,7 @@ import '../topics/08_theme_toggle.dart';
 import '../topics/09_navigation_hubs.dart';
 import '../topics/10_local_storage.dart';
 import '../topics/11_cubit_state.dart';
+import '../topics/12_event_bloc.dart';
 
 class HomeScreen extends StatelessWidget {
   final bool isDarkMode;
@@ -222,6 +223,21 @@ class HomeScreen extends StatelessWidget {
              Navigator.push(
              context,
              MaterialPageRoute(builder: (context) => const CubitStateScreen()),
+             );
+             },
+            ),
+          ),
+
+          Card(
+            child: ListTile(
+             leading: const Icon(Icons.setting_input_component),
+             title: const Text('Topic 12: Event-Drive Bloc'),
+             subtitle: const Text('Mapping explict user event to sate streams cleanly'),
+             trailing: const Icon(Icons.arrow_forward_ios),
+             onTap: () {
+             Navigator.push(
+             context,
+             MaterialPageRoute(builder: (context) => const EventBlocScreen()),
              );
              },
             ),
